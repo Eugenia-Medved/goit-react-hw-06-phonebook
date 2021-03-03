@@ -5,16 +5,16 @@ import contactsActions from '../../redux/contacts/contacts-action';
 import s from './ContactList.module.css';
 import PhoneList from './fade.module.css';
 
-function ContactList({ contacts, onDeleteNumber }) {
+function ContactList({ items, onDeleteNumber }) {
   return (
     <TransitionGroup component="ol" className={s.list}>
-      {contacts.map(contact => (
-        <CSSTransition key={contact.id} timeout={250} classNames={PhoneList}>
-          <li key={contact.id} className={s.item}>
+      {items.map(item => (
+        <CSSTransition key={item.id} timeout={250} classNames={PhoneList}>
+          <li key={item.id} className={s.item}>
             <span>
-              {contact.name}:{contact.number}
+              {item.name}:{item.number}
             </span>
-            <button className={s.button} type="button" onClick={() => onDeleteNumber(contact.id)}>
+            <button className={s.button} type="button" onClick={() => onDeleteNumber(item.id)}>
               Delete
             </button>
           </li>
@@ -29,8 +29,8 @@ const getVisibleTodos = (contacts, filter) => {
   return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
 };
 
-const mapStateToProps = ({ contacts: { contacts, filter } }) => ({
-  contacts: getVisibleTodos(contacts, filter),
+const mapStateToProps = ({ contacts, filter }) => ({
+  items: getVisibleTodos(contacts, filter),
 });
 
 const mapDispatchToProps = dispatch => ({
